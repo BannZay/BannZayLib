@@ -5,6 +5,10 @@ local log = BannZay.Logger:New("Array");
 local Array = Namespace:RegisterGlobal("BannZay.Array", Prototype:NewChild());
 
 function Array:New(comparer)
+	if comparer == nil then
+		comparer = function(x, y) return x == y end;
+	end
+
 	return self:NewChild({
 		count = 0,
 		innerList = {},

@@ -73,7 +73,6 @@ function Namespace:RegisterGlobal(fullName, item, ownerEntity, override)
 	local parent = Namespace;
 	
 	for name in ParseItems(fullName) do
-		print("new name - " .. name)
 		parent = parent:Register(name, override);
     end
 	
