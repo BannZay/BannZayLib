@@ -28,6 +28,11 @@ function Logger:Log(level, message)
 	end
 end
 
+
+function Logger:LogVariable(level, variable, value)
+	self:Log(level, "[" .. variable .. "] = '"..value.."'.")
+end
+
 function Logger:Out(message)
 	self:Print(self.title .. ": " .. message);
 end
