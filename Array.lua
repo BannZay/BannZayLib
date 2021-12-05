@@ -3,7 +3,7 @@ if BannZayLib.Initialized then return; end
 
 local log = BannZayLib.Logger:New("Array");
 
-local Array = BannZayLib:Register("Array");
+local Array = BannZayLib.Namespace:Register("Array", BannZayLib.Prototype:NewChild(), false, BannZayLib);
 
 function Array:New(comparer)
 	if comparer == nil then

@@ -3,7 +3,8 @@ if BannZayLib.Initialized then return; end
 
 local GlobalSettings = BannZayLib.GlobalSettings;
 
-local Logger = BannZayLib:Register("Logger");
+local Logger = BannZayLib.Namespace:Register("Logger", BannZayLib.Prototype:NewChild(), false, BannZayLib);
+
 
 local function DefaultPrintMethod(message)
 	print(message);

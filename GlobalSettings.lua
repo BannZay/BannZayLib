@@ -6,4 +6,4 @@ local globalSettings =
 	GlobalDebuggingLevel = nil;
 };
 
-BannZayLib:Register("GlobalSettings", globalSettings);
+BannZayLib.Namespace:Register("GlobalSettings", globalSettings, false, BannZayLib);

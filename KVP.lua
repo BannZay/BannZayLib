@@ -1,7 +1,7 @@
 local BannZayLib = LibStub:GetLibrary("BannZayLib-1.0");
 if BannZayLib.Initialized then return; end
 
-local KVP = BannZayLib:Register("KVP");
+local KVP = BannZayLib.Namespace:Register("KVP", BannZayLib.Prototype:NewChild(), false, BannZayLib);
 
 function KVP:New(item1, item2)
 	return KVP:NewChild({

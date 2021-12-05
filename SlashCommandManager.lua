@@ -1,7 +1,7 @@
 local BannZayLib = LibStub:GetLibrary("BannZayLib-1.0");
 if BannZayLib.Initialized then return; end
 
-local SlashCommandManager = BannZayLib:Register("SlashCommandManager");
+local SlashCommandManager = BannZayLib.Namespace:Register("SlashCommandManager", BannZayLib.Prototype:NewChild(), false, BannZayLib);
 
 local GlobalSettings = BannZayLib.GlobalSettings;
 local Logger = BannZayLib.Logger;
