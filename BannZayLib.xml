@@ -12,6 +12,8 @@
 	<Script file="KVP.lua"/>
 	<Script file="SlashCommandManager.lua"/>
 	<Script file="Test.lua"/>
+	<Script file="Tests.lua"/>
 	
 	<Script file="Dispose.lua"/>
+	
 </Ui>

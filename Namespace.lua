@@ -2,7 +2,11 @@ local BannZayLib = LibStub:GetLibrary("BannZayLib-1.0");
 if BannZayLib.Initialized then return; end
 
 BannZayLib.Namespace = {}
-local NameSpacePrototype = BannZayLib.Prototype:NewChild({isNamespace = true});
+local NameSpacePrototype = BannZayLib.Prototype:NewChild();
+
+function BannZayLib.Namespace:New(name)
+	return NameSpacePrototype:NewChild({isNamespace = true});
+end
 
 local function ParseItems(fullNamespace)
 	local iterator = fullNamespace:gmatch("[^\.]+");
@@ -78,7 +82,7 @@ function NameSpacePrototype:Register(name, override)
 		return existingNamespace;
 	end
 
-	local namespace = BannZayLib.Prototype:NewChild({name = name, isNamespace = true})
-	slef[name] = namespace;
+	local namespace =  BannZayLib.Namespace:New(name);
+	self[name] = namespace;
 	return namespace;
 end

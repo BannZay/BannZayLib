@@ -26,7 +26,7 @@ function Logger:Log(level, message)
 	local logLevel = self.logLevel or 0;
 	
 	if (GlobalSettings.GlobalDebuggingLevel or logLevel) >= level then
-		self:Print(self.prescription .. self.title .. ": " .. message);
+		self:Out(self.prescription .. message);
 	end
 end
 
@@ -36,13 +36,13 @@ function Logger:LogVariable(level, variable, value)
 end
 
 function Logger:Out(message)
-	self:Print(self.title .. ": " .. message);
+	if self.title ~= nil and self.title ~= '' then
+		message = self.title .. ": " .. message;
+	end
+	
+	self.printMethod(message);
 end
 
 function Logger:SetLogLevel(level)
 	self.logLevel = level;
-end
-
-function Logger:Print(message)
-	self.printMethod(message);
 end
