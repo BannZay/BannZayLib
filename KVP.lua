@@ -1,6 +1,7 @@
-if not BannZay_Upgrade then return; end
+local BannZayLib = LibStub:GetLibrary("BannZayLib-1.0");
+if BannZayLib.Initialized then return; end
 
-local KVP = Namespace:RegisterGlobal("BannZay.KVP", Prototype:NewChild());
+local KVP = BannZayLib:Register("KVP");
 
 function KVP:New(item1, item2)
 	return KVP:NewChild({

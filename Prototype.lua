@@ -1,7 +1,8 @@
-if not BannZay_Upgrade then return; end
+local BannZayLib = LibStub:GetLibrary("BannZayLib-1.0");
+if BannZayLib.Initialized then return; end
 
-Prototype = {}
-Prototype.__index = Prototype;
+BannZayLib.Prototype = {}
+BannZayLib.Prototype.__index = BannZayLib.Prototype;
 
 -- -- add multiple ctors support
 -- function Prototype:Create(ctor)
@@ -24,7 +25,7 @@ Prototype.__index = Prototype;
 
 
 -- add multiple ctors support
-function Prototype:NewChild(newItem)
+function BannZayLib.Prototype:NewChild(newItem)
 	if newItem == nil then
 		newItem = {};
 	end

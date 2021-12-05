@@ -1,8 +1,9 @@
-if not BannZay_Upgrade then return; end
+local BannZayLib = LibStub:GetLibrary("BannZayLib-1.0");
+if BannZayLib.Initialized then return; end
 
-local log = BannZay.Logger:New("Array");
+local log = BannZayLib.Logger:New("Array");
 
-local Array = Namespace:RegisterGlobal("BannZay.Array", Prototype:NewChild());
+local Array = BannZayLib:Register("Array");
 
 function Array:New(comparer)
 	if comparer == nil then

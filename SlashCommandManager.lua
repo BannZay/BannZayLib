@@ -1,14 +1,16 @@
-if not BannZay_Upgrade then return; end
+local BannZayLib = LibStub:GetLibrary("BannZayLib-1.0");
+if BannZayLib.Initialized then return; end
 
-local GlobalSettings = BannZay.GlobalSettings;
-local Logger = BannZay.Logger;
-local Array = BannZay.Array;
-local KVP = BannZay.KVP;
+local SlashCommandManager = BannZayLib:Register("SlashCommandManager");
+
+local GlobalSettings = BannZayLib.GlobalSettings;
+local Logger = BannZayLib.Logger;
+local Array = BannZayLib.Array;
+local KVP = BannZayLib.KVP;
 
 local log = Logger:New("SlashCommanderDebugger");
-local out = Logger:New("SlashCommander", -1, "");
 
-local SlashCommander = Prototype:NewChild();
+local SlashCommander = BannZayLib.Prototype:NewChild();
 
 local function SetIgnoreCase(self, ignoreCase)
 	if ignoreCase == true then
@@ -68,11 +70,15 @@ local function DefaultHelpCommandHandler(self, args)
 		str = str .. v:Item1();
 	end
 
-	out:Out("Available commands: " .. str);
+	self.outputStream:Out("Available commands: " .. str);
 end
 
 local function DefaultMissingCommandHandler(self, args, input)
-	out:Out("There is no '" .. input .. "' command");
+	if input ~= '' then
+		self.outputStream:Out("There is no '" .. input .. "' command");
+	end
+	
+	ResolveCommandHandler(self, 'help')(self, nil, nil); -- execute help command
 end
 
 local function ToggleDebugCommandHandler(self, args)
@@ -84,12 +90,13 @@ local function ToggleDebugCommandHandler(self, args)
 	end
 end
 
-local function NewSlashCommander(name)
+local function NewSlashCommander(name, ...)
 	log:Log(3, "New slashCommander created with name - " .. name)
 	local slashCommander = SlashCommander:NewChild({
-	name = name, 
-	commands = Array:New(), 
-	entryCount = 0,
+		name = name, 
+		commands = Array:New(), 
+		entryCount = 0,
+		outputStream = Logger:New(name, -1, ""),
 	});
 	
 	slashCommander:SetMissingCommandHandler(DefaultMissingCommandHandler);
@@ -97,9 +104,17 @@ local function NewSlashCommander(name)
 	SetIgnoreCase(slashCommander, true);
 	
 	SlashCmdList[name] = function(input) HandleInput(slashCommander, input); end
+	
 	slashCommander:AddEntry(name);
+	
+	local params = {...}
+	for i=1,#params do
+		local additionalName = params[i]
+		slashCommander:AddEntry(additionalName);
+	end
+	
 	slashCommander:AddCommand("help", DefaultHelpCommandHandler);
-	slashCommander:AddCommand("rootDebug", ToggleDebugCommandHandler);
+	slashCommander:AddCommand("ToggleDebug", ToggleDebugCommandHandler);
 	return slashCommander;
 end
 
@@ -121,8 +136,6 @@ function SlashCommander:AddCommand(command, handler)
 	self.commands:Add(KVP:New(command, handler));
 end
 
-local SlashCommandManager = Namespace:RegisterGlobal("BannZay.SlashCommandManager", Prototype:NewChild());
-
-function SlashCommandManager:New(addonName)
-	return NewSlashCommander(addonName);
+function SlashCommandManager:New(addonName, ...)
+	return NewSlashCommander(addonName, ...);
 end

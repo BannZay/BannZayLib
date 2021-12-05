@@ -1,8 +1,9 @@
-if not BannZay_Upgrade then return; end
+local BannZayLib = LibStub:GetLibrary("BannZayLib-1.0");
+if BannZayLib.Initialized then return; end
 
 local globalSettings = 
 {
 	GlobalDebuggingLevel = nil;
 };
 
-local GlobalSettings = Namespace:RegisterGlobal("BannZay.GlobalSettings", globalSettings);
+BannZayLib:Register("GlobalSettings", globalSettings);
