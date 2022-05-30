@@ -3,7 +3,7 @@ if BannZayLib.Initialized then return; end
 
 local globalSettings = 
 {
-	GlobalDebuggingLevel = nil;
+	MinimumLogLevelOverride = nil;
 };
 
 BannZayLib.Namespace:Register("GlobalSettings", globalSettings, false, BannZayLib);

@@ -30,7 +30,7 @@ function BannZayLib.Prototype:NewChild(newItem)
 		newItem = {};
 	end
 
-	setmetatable(newItem, self);
 	newItem.__index = newItem;
+	setmetatable(newItem, self);
 	return newItem;
 end

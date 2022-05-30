@@ -10,11 +10,11 @@ local function DefaultPrintMethod(message)
 	print(message);
 end
 
-function Logger:New(title, logLevel, prescription, printMethod)
+function Logger:New(title, minimumLogLevel, prescription, printMethod)
 	local instance = 
 	{
 		title = title or "", 
-		logLevel = logLevel, 
+		minimumLogLevel = minimumLogLevel, 
 		prescription = prescription or "Debug: ",
 		printMethod = printMethod or DefaultPrintMethod
 	};
@@ -23,9 +23,9 @@ function Logger:New(title, logLevel, prescription, printMethod)
 end
 
 function Logger:Log(level, message)
-	local logLevel = self.logLevel or 0;
+	local minimumLogLevel = self.minimumLogLevel or 0;
 	
-	if (GlobalSettings.GlobalDebuggingLevel or logLevel) >= level then
+	if (GlobalSettings.GlobalDebuggingLevel or minimumLogLevel) >= level then
 		self:Out(self.prescription .. message);
 	end
 end
@@ -43,6 +43,6 @@ function Logger:Out(message)
 	self.printMethod(message);
 end
 
-function Logger:SetLogLevel(level)
-	self.logLevel = level;
+function Logger:SetLogLevel(minimumLogLevel)
+	self.minimumLogLevel = minimumLogLevel;
 end
